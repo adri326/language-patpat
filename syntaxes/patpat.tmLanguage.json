@@ -103,12 +103,12 @@
       },
       "name": "expression.group",
       "patterns": [
-        {"include": "#parenthesis"},
+        {"include": "#line_comment"},
         {"include": "#pattern_call"},
         {"include": "#string"},
         {"include": "#keyword"},
         {"include": "#constant"},
-        {"include": "#line_comment"},
+        {"include": "#parenthesis"},
         {"include": "#method"},
         {"include": "#body"}
       ]
@@ -124,12 +124,12 @@
       },
       "name": "expression.group",
       "patterns": [
+        {"include": "#line_comment"},
         {"include": "#parenthesis"},
         {"include": "#pattern_call"},
         {"include": "#string"},
         {"include": "#keyword"},
-        {"include": "#constant"},
-        {"include": "#line_comment"},
+        {"include": "#constant"}, 
         {"include": "#method"},
         {"include": "#pattern_declaration"},
         {"include": "#variable_declaration"}
