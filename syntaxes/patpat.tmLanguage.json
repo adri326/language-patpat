@@ -1,0 +1,140 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "PatPat",
+  "patterns": [
+    {"include": "#line_comment"},
+    {"include": "#constant"},
+    {"include": "#pattern_declaration"},
+    {"include": "#pattern_call"},
+    {"include": "#keyword"},
+    {"include": "#method"},
+    {"include": "#variable_assignement"},
+    {"include": "#variable_declaration"},
+    {"include": "#string"},
+    {"include": "#parenthesis"},
+    {"include": "#body"}
+  ],
+  "repository": {
+    "line_comment": {
+      "begin": "//",
+      "end": "\n",
+      "name": "comment.line.double-slash"
+    },
+    "constant": {
+      "patterns": [
+        {
+          "match": "\\b(true|false)\\b",
+          "name": "constant.language"
+        },
+        {
+          "match": "\\b-?\\d+(\\.\\d+)?\\b",
+          "name": "constant.numeric"
+        }
+      ]
+    },
+    "pattern_declaration": {
+      "captures": {
+        "1": {"name": "entity.name.function"},
+        "2": {"name": "keyword.other.unit"}
+      },
+      "match": "(['#][\\w_][\\w_\\d]*)\\s*(:)"
+    },
+    "pattern_call": {
+      "patterns": [
+        {
+          "match": "'[\\w_](?:[\\w_\\d]|::)*(?=\\s*\\()",
+          "name": "entity.name.function"
+        },
+        {
+          "match": "(#)[\\w_](?:[\\w_\\d]|::)*(?=\\s*\\()",
+          "name": "keyword.control"
+        }
+      ]
+    },
+    "keyword": {
+      "patterns": [
+        {
+          "match": "[+\\-*\\/%!]|&&|\\|\\||[<>=!]=|[<>]|=>",
+          "name": "keyword.operator"
+        }
+      ]
+    },
+    "method": {
+      "match": "(::)\\s*([\\w_][\\w\\d_]*)(?=\\s*\\()",
+      "captures": {
+        "1": {"name": "keyword.operator"},
+        "2": {"name": "entity.name.method"}
+      }
+    },
+    "variable_assignement": {
+      "captures": {
+        "1": {"name": "variable.name"},
+        "2": {"name": "keyword.operator"}
+      },
+      "match": "\\b([\\w_][\\w_\\d]*)\\s*(:(?!:))"
+    },
+    "variable_declaration": {
+      "captures": {
+        "1": {"name": "storage.type"},
+        "2": {"name": "variable.name"},
+        "3": {"name": "keyword.operator"}
+      },
+      "match": "\\b(let)\\s+([\\w_][\\w_\\d]*)\\s*(:)"
+    },
+    "string": {
+      "name": "string.quoted.single",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape",
+          "match": "\\\\(?:[abfnrtv\\\\\"0]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{6})"
+        }
+      ]
+    },
+    "parenthesis": {
+      "begin": "\\(",
+      "beginCaptures": {
+        "0": {"name": "punctuation.paren.open"}
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": {"name": "punctuation.paren.close"}
+      },
+      "name": "expression.group",
+      "patterns": [
+        {"include": "#parenthesis"},
+        {"include": "#pattern_call"},
+        {"include": "#string"},
+        {"include": "#keyword"},
+        {"include": "#constant"},
+        {"include": "#line_comment"},
+        {"include": "#method"},
+        {"include": "#body"}
+      ]
+    },
+    "body": {
+      "begin": "{",
+      "beginCaptures": {
+        "0": {"name": "punctuation.paren.open"}
+      },
+      "end": "}",
+      "endCaptures": {
+        "0": {"name": "punctuation.paren.close"}
+      },
+      "name": "expression.group",
+      "patterns": [
+        {"include": "#parenthesis"},
+        {"include": "#pattern_call"},
+        {"include": "#string"},
+        {"include": "#keyword"},
+        {"include": "#constant"},
+        {"include": "#line_comment"},
+        {"include": "#method"},
+        {"include": "#pattern_declaration"},
+        {"include": "#variable_declaration"}
+      ]
+    }
+  },
+  "scopeName": "source.patpat"
+}

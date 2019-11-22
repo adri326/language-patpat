@@ -1,0 +1,25 @@
+{
+    "name": "language-patpat",
+    "displayName": "language-patpat",
+    "description": "Language support for PatPat",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.40.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "patpat",
+            "aliases": ["PatPat", "patpat"],
+            "extensions": [".patpat"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "patpat",
+            "scopeName": "source.patpat",
+            "path": "./syntaxes/patpat.tmLanguage.json"
+        }]
+    }
+}
