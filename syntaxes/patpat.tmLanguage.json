@@ -1,6 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "PatPat",
+  "fileTypes": ["patpat", "pat"],
   "patterns": [
     {"include": "#line_comment"},
     {"include": "#constant"},
@@ -8,12 +9,14 @@
     {"include": "#pattern_call"},
     {"include": "#keyword"},
     {"include": "#method"},
+    {"include": "#struct"},
     {"include": "#variable_assignement"},
     {"include": "#variable_declaration"},
     {"include": "#string"},
     {"include": "#parenthesis"},
-    {"include": "#body"}
-  ],
+    {"include": "#body"},
+    {"include": "#typename"}
+   ],
   "repository": {
     "line_comment": {
       "begin": "//",
@@ -67,11 +70,22 @@
       }
     },
     "variable_assignement": {
-      "captures": {
-        "1": {"name": "variable.name"},
-        "2": {"name": "keyword.operator"}
-      },
-      "match": "\\b([\\w_][\\w_\\d]*)\\s*(:(?!:))"
+      "patterns": [
+        {
+          "captures": {
+            "1": {"name": "variable.name"},
+            "2": {"name": "keyword.operator"}
+          },
+          "match": "\\b([a-z_][\\w_\\d]*)\\s*(:(?!:))"
+        },
+        {
+          "captures": {
+            "1": {"name": "entity.name.type.class"},
+            "2": {"name": "keyword.operator"}
+          },
+          "match": "\\b([A-Z][\\w\\d_]*)\\s*(:(?!:))"
+        }
+      ]
     },
     "variable_declaration": {
       "captures": {
@@ -79,7 +93,7 @@
         "2": {"name": "variable.name"},
         "3": {"name": "keyword.operator"}
       },
-      "match": "\\b(let)\\s+([\\w_][\\w_\\d]*)\\s*(:)"
+      "match": "\\b(let)\\s+([\\w_][\\w_\\d]*)\\s*(:)?"
     },
     "string": {
       "name": "string.quoted.single",
@@ -129,11 +143,25 @@
         {"include": "#pattern_call"},
         {"include": "#string"},
         {"include": "#keyword"},
-        {"include": "#constant"}, 
+        {"include": "#constant"},
         {"include": "#method"},
         {"include": "#pattern_declaration"},
-        {"include": "#variable_declaration"}
+        {"include": "#struct"},
+        {"include": "#variable_declaration"},
+        {"include": "#typename"}
       ]
+    },
+    "struct": {
+      "match": "([A-Z][\\w\\d_]*)\\s*(:)\\s*(struct)",
+      "captures": {
+        "1": {"name": "entity.name.type.class"},
+        "2": {"name": "keyword.operator"},
+        "3": {"name": "storage.type.class"}
+      }
+    },
+    "typename": {
+      "match": "[A-Z][\\w\\d_]*",
+      "name": "entity.name.type.class"
     }
   },
   "scopeName": "source.patpat"

@@ -1,0 +1,9 @@
+{
+  ".source.patpat": {
+    "editor": {
+      "commentStart": "//",
+      "increaseIndentPattern": "\\(|\\{",
+      "decreaseIndentPattern": "\\}|\\)"
+    }
+  }
+}
